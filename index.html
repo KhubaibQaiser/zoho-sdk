@@ -8,68 +8,18 @@
 <body onload="onload();">
     <h1>Achieve Jobs!</h1>
 
-    <script src="https://static.zohocdn.com/zohocrm/v2.0/sdk/4.0.0/sdk.js"></script>
+    <script src="js/zoho-api-client.js"></script>
 
     <script>
+        let zohoApiClient = new ZohoAPIClient("1000.ECZON4HJNLJAOYY1VVEPGVAF5CQ9VW", "03c6b5b72f7b2959342563eb67a3e56b267479e8ed", "1000.b19b6d0e2053a337edf4f94f6deddea7.00d80bac86ef7f21abcf5ff75e51a34e");
+
         async function onload() {
-            /*
-            * Create an instance of Logger Class that takes parameter
-            * 1 -> Level of the log messages to be logged. Can be configured by typing Levels "." and choose any level from the list displayed.
-            */
-            let logger = Logger.getInstance(Levels.ALL);
-
-            /*
-            * Configure the environment
-            * which is of the pattern Domain.Environment
-            * Available Domains: US, EU, IN, CN, AU
-            * Available Environments: PRODUCTION(), DEVELOPER(), SANDBOX()
-            */
-            let environment = DataCenter.US.DEVELOPER();
-
-            /*
-            * Create a Token instance
-            * clientId -> OAuth client id.
-            * scope -> OAuth client scope.
-            * redirectURL -> OAuth Redirect URL.
-            */
-            let token = new OAuthBuilder()
-                .clientId("1000.8S5ESNFGR07ATBRAYM5P3G87AX62MJ")
-                .scope("ZohoRECRUIT.modules.jobopening.READ")
-                .redirectURL("https://zoho-sdk.vercel.app/redirect")
-                .build();
-
-            /*
-            * autoRefreshFields
-            * if true - all the modules' fields will be auto-refreshed in the background, every hour.
-            * if false - the fields will not be auto-refreshed in the background. The user can manually delete the cache or refresh the fields using methods from ModuleFieldsHandler
-            *
-            * cacheStore
-            * A boolean field that allows or disallows the storage of module field information in cache.
-            * True - the SDK stores all the modules' field information in cache, and refreshes every hour, if autoRefreshFields is true.
-            * False - the SDK temporarily stores the modules' field information in a Map.
-            *
-            * pickListValidation
-            * A boolean field that validates user input for a pick list field and allows or disallows the addition of a new value to the list.
-            * True - the SDK validates the input. If the value does not exist in the pick list, the SDK throws an error.
-            * False - the SDK does not validate the input and makes the API request with the user’s input to the pick list
-            *
-            * timeout
-            * representing the number of milliseconds a request can take before automatically being terminated.
-            */
-            let sdkConfig = new SDKConfigBuilder().autoRefreshFields(true).pickListValidation(false).cacheStore(true).timeout(10000).build();
-
-            await new InitializeBuilder()
-                .environment(environment)
-                .token(token)
-                .SDKConfig(sdkConfig)
-                .logger(logger)
-                .initialize();
-
-            //Get instance of RecordOperations Class
-            let recordOperations = new ZCRM.Record.Operations();
-            console.log(recordOperations)
-            let response = await recordOperations.getRecords("Leads");
-            console.log(response)
+            zohoApiClient.generateAccessToken().then((response) => {
+                console.log(response);
+                zohoApiClient.getJobOpenings().then((response) => {
+                    console.log(response);
+                });
+            });
         }
 
     </script>
