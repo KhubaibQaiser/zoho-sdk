@@ -33,10 +33,9 @@
             * redirectURL -> OAuth Redirect URL.
             */
             let token = new OAuthBuilder()
-                .clientId("1000.MJT02LRAV1UVP2G48B7XOJPQY88JBK")
-                .accessToken("1000.8f49c9dd3786e40c50a223003b39bfb9.4f7e1fb97a9ddb4fd01c4225b4d91aaf")
+                .clientId("1000.8S5ESNFGR07ATBRAYM5P3G87AX62MJ")
                 .scope("ZohoRECRUIT.modules.jobopening.READ")
-                .redirectURL("https://zoho-sdk.vercel.app/")
+                .redirectURL("https://zoho-sdk.vercel.app/redirect")
                 .build();
 
             /*
@@ -69,7 +68,7 @@
             //Get instance of RecordOperations Class
             let recordOperations = new ZCRM.Record.Operations();
             console.log(recordOperations)
-            let response = await recordOperations.getRecords("Leads");
+            // let response = await recordOperations.getRecords("Leads");
             // console.log(response)
         }
 
